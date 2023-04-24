@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <Version>0.10.0</Version>
+        <Authors>https://github.com/dariogriffo</Authors>
+        <Company>https://github.com/dariogriffo</Company>
+        <Title>BlueskyNet</Title>
+        <Copyright>https://github.com/dariogriffo</Copyright>
+        <Description>Unofficial .NET implementation of atproto.com</Description>
+        <LicenseUrl>https://github.com/dariogriffo/bluesky-net/blob/main/LICENSE</LicenseUrl>
+        <PackageProjectUrl>https://github.com/dariogriffo/bluesky-net</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/dariogriffo/bluesky-net</RepositoryUrl>
+        <Product>Bluesky.Net</Product>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageTags>nordigen open-banking</PackageTags>
+        <PackageReleaseNotes>https://github.com/dariogriffo/bluesky-net/blob/main/RELEASE_NOTES.md</PackageReleaseNotes>
+        <PackageLicenseFile>license.txt</PackageLicenseFile>
+        <OneOfPackageLicenseFile>license.oneof.txt</OneOfPackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="license\license.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+        <None Include="license\license.oneof.txt" Pack="true" PackagePath="$(OneOfPackageLicenseFile)" />
+        <None Include="images\icon.png" Pack="true" PackagePath="\" />
+        <None Include="README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="license.txt">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="README.md">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="BlueskyNet.UnitTests" />
+        <InternalsVisibleTo Include="Autofixture" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    </ItemGroup>
+
+</Project>

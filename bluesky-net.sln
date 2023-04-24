@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bluesky.Net", "src\Bluesky.Net\Bluesky.Net.csproj", "{93F2F7E1-EB0D-423D-BA6C-A32EC2759168}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1ED4D99E-25FD-4350-B3F9-DCD1B2A8EB65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{91FE05D8-E20C-4127-9DEE-A77707F37DA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bluesky.Net.Tests", "tests\Bluesky.Net.Tests\Bluesky.Net.Tests.csproj", "{06B14B65-E393-4787-A62E-7D4D0D17BD8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93F2F7E1-EB0D-423D-BA6C-A32EC2759168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93F2F7E1-EB0D-423D-BA6C-A32EC2759168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93F2F7E1-EB0D-423D-BA6C-A32EC2759168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93F2F7E1-EB0D-423D-BA6C-A32EC2759168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B14B65-E393-4787-A62E-7D4D0D17BD8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B14B65-E393-4787-A62E-7D4D0D17BD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B14B65-E393-4787-A62E-7D4D0D17BD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B14B65-E393-4787-A62E-7D4D0D17BD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{93F2F7E1-EB0D-423D-BA6C-A32EC2759168} = {1ED4D99E-25FD-4350-B3F9-DCD1B2A8EB65}
+		{06B14B65-E393-4787-A62E-7D4D0D17BD8E} = {91FE05D8-E20C-4127-9DEE-A77707F37DA7}
+	EndGlobalSection
+EndGlobal
