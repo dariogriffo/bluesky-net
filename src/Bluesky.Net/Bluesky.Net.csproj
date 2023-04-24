@@ -4,7 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
-        <Version>0.10.0</Version>
+        <Version>0.0.2  -alpha</Version>
         <Authors>https://github.com/dariogriffo</Authors>
         <Company>https://github.com/dariogriffo</Company>
         <Title>BlueskyNet</Title>
@@ -20,7 +20,7 @@
 
     <PropertyGroup>
         <PackageIcon>icon.png</PackageIcon>
-        <PackageTags>nordigen open-banking</PackageTags>
+        <PackageTags>Bluesky at-protocol xrpc</PackageTags>
         <PackageReleaseNotes>https://github.com/dariogriffo/bluesky-net/blob/main/RELEASE_NOTES.md</PackageReleaseNotes>
         <PackageLicenseFile>license.txt</PackageLicenseFile>
         <OneOfPackageLicenseFile>license.oneof.txt</OneOfPackageLicenseFile>

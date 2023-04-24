@@ -35,6 +35,6 @@ public class DidTests
         const string type = "web";
         string did = $"did:{type}:asdf.org";
         var sut = new Did(did);
-        sut.Type().Should().Be(type);
+        sut.Type.Should().Be(type);
     }
 }
