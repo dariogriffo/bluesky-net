@@ -1,6 +1,7 @@
 namespace Bluesky.Net.Tests;
 
 using FluentAssertions;
+using Models;
 using System;
 using Xunit;
 

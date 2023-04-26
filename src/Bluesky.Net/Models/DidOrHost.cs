@@ -1,12 +1,12 @@
-﻿using Bluesky.Net.InternalOneOf;
+﻿namespace Bluesky.Net.Models;
 
-namespace Bluesky.Net;
-
+using Internals;
+using Multiples;
 using System;
 
-public class DidOrHost : OneOfBase<Did, Host>
+public class DidOrHost : MultipleBase<Did, Host>
 {
-    public DidOrHost(string uri)
+    public DidOrHost(string? uri)
         : base(
             Parser.IsValidDid(uri) ? new Did(uri) :
             Parser.IsValidHost(uri) ? new Host(uri) :
@@ -14,12 +14,12 @@ public class DidOrHost : OneOfBase<Did, Host>
     {
     }
 
-    private DidOrHost(OneOf<Did, Host> input) : base(input)
+    private DidOrHost(Multiple<Did, Host> input) : base(input)
     {
     }
 
-    public static implicit operator DidOrHost(string uri) => Parser.IsValidDid(uri) ? new Did(uri) : new Host(uri);
-    public static implicit operator DidOrHost(Did value) => new(value);
+    public static implicit operator DidOrHost(string? uri) => Parser.IsValidDid(uri) ? new Did(uri) : new Host(uri);
+    public static implicit operator DidOrHost(Did value) => new(value!);
     public static implicit operator Did(DidOrHost value) => value.Match(x => x, _ => throw new InvalidCastException());
 
     public static implicit operator DidOrHost(Host value) => new(value);
@@ -29,5 +29,5 @@ public class DidOrHost : OneOfBase<Did, Host>
         this.Match(
             did => did.ToString(),
             host => host.ToString()
-        );
+        )!;
 }

@@ -1,6 +1,7 @@
 namespace Bluesky.Net.Tests;
 
 using FluentAssertions;
+using Models;
 using Xunit;
 
 public class AtUriTests
@@ -16,7 +17,7 @@ public class AtUriTests
     [InlineData("at://did:plc:ltk4reuh7rkoy2frnueetpb5/app.bsky.follow/3jg23pbmlhc2a")]
     public void Valid_AtUri(string uri)
     {
-        var sut = new AtUri(uri);
+        AtUri sut = new AtUri(uri);
         sut.ToString().Should().Be(uri);
     }
 
@@ -27,7 +28,7 @@ public class AtUriTests
         const string fragment = "/title";
         const string repository = "bob.com";
         const string collection = "io.example.song";
-        var sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
+        AtUri sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
         sut.Collection.Should().BeEquivalentTo(collection);
     }
 
@@ -38,7 +39,7 @@ public class AtUriTests
         const string fragment = "/title";
         const string repository = "bob.com";
         const string collection = "io.example.song";
-        var sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
+        AtUri sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
         sut.Record.Should().BeEquivalentTo(record);
     }
 
@@ -49,7 +50,7 @@ public class AtUriTests
         const string fragment = "/title";
         const string repository = "bob.com";
         const string collection = "io.example.song";
-        var sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
+        AtUri sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
         sut.Fragment.Should().BeEquivalentTo(fragment);
     }
 
@@ -60,7 +61,7 @@ public class AtUriTests
         const string fragment = "/title";
         DidOrHost repository = new("bob.com");
         const string collection = "io.example.song";
-        var sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
+        AtUri sut = new AtUri($"at://{repository}/{collection}/{record}#{fragment}");
         sut.Repository.ToString().Should().BeEquivalentTo(repository.ToString());
     }
 }

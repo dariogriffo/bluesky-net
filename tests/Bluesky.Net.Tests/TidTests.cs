@@ -1,6 +1,7 @@
 namespace Bluesky.Net.Tests;
 
 using FluentAssertions;
+using Models;
 using System;
 using Xunit;
 
@@ -12,15 +13,17 @@ public class TidTests
     [InlineData("asdf234as4asdf234")]
     public void Valid_Tids(string tid)
     {
-        var sut = new Tid(tid);
-        sut.ToString().Should().Be(tid);
+        Tid sut = new(tid);
+        string result = sut;
+        result.Should().Be(tid);
     }
     
     [Fact]
     public void Valid_Constructor()
     {
-        var sut = new Tid(0,0);
-        sut.ToString().Should().Be("2222-222-2222-22");
+        Tid sut = new(0,0);
+        string result = sut;
+        result.Should().Be("2222-222-2222-22");
     }
 
     [Theory]

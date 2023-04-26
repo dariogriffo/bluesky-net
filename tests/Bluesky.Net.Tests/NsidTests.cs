@@ -1,6 +1,7 @@
 namespace Bluesky.Net.Tests;
 
 using FluentAssertions;
+using Models;
 using Xunit;
 
 public class NsidTests
@@ -9,7 +10,7 @@ public class NsidTests
     public void Valid_Nsid()
     {
         const string nsid = "com.atproto.recordType";
-        var sut = new Nsid(nsid);
+        Nsid sut = new Nsid(nsid);
         sut.ToString().Should().Be(nsid);
     }
     
@@ -19,7 +20,7 @@ public class NsidTests
         const string domain = "com.atproto";
         const string name = "recordType";
         string nsid = $"{domain}.{name}";
-        var sut = new Nsid(nsid);
+        Nsid sut = new Nsid(nsid);
         sut.Domain.Should().Be("atproto.com");
     }
     
@@ -30,7 +31,7 @@ public class NsidTests
         const string domain = "com.atproto";
         const string name = "recordType";
         string nsid = $"{domain}.{name}";
-        var sut = new Nsid(nsid);
+        Nsid sut = new Nsid(nsid);
         sut.Name.Should().Be(name);
     }
 }

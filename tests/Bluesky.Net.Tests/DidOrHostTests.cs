@@ -1,6 +1,7 @@
 namespace Bluesky.Net.Tests;
 
 using FluentAssertions;
+using Models;
 using Xunit;
 
 public class DidOrHostTests
@@ -8,7 +9,7 @@ public class DidOrHostTests
     [Fact]
     public void Valid_Did()
     {
-        var did = new Did("did:web:asdf.org");
+        Did did = new Did("did:web:asdf.org");
         DidOrHost sut = did;
         Did back = sut;
         back.Should().BeEquivalentTo(did);
@@ -16,7 +17,7 @@ public class DidOrHostTests
     [Fact]
     public void Valid_Host()
     {
-        var host = new Host("multi.part.domain");
+        Host host = new Host("multi.part.domain");
         DidOrHost sut = host;
         Host back = sut;
         back.Should().BeEquivalentTo(host);

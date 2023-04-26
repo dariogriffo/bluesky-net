@@ -1,24 +1,29 @@
+namespace Bluesky.Net.Multiples;
+
 using System;
+using static Internals.Functions;
 
-namespace Bluesky.Net.InternalOneOf;
-using static Functions;
-
-public class OneOfBase<T0, T1>
+/// <summary>
+/// Minimalistic https://github.com/mcintyre321/OneOf
+/// </summary>
+/// <typeparam name="T0"></typeparam>
+/// <typeparam name="T1"></typeparam>
+public class MultipleBase<T0, T1>
 {
-    readonly T0 _value0;
-    readonly T1 _value1;
+    readonly T0? _value0;
+    readonly T1? _value1;
     readonly int _index;
 
-    protected OneOfBase(OneOf<T0, T1> input)
+    protected MultipleBase(Multiple<T0, T1> input)
     {
         _index = input.Index;
         switch (_index)
         {
             case 0:
-                _value0 = input.AsT0;
+                _value0 = input.AsT0!;
                 break;
             case 1:
-                _value1 = input.AsT1;
+                _value1 = input.AsT1!;
                 break;
             default: throw new InvalidOperationException();
         }
@@ -27,8 +32,8 @@ public class OneOfBase<T0, T1>
     public object Value =>
         _index switch
         {
-            0 => _value0,
-            1 => _value1,
+            0 => _value0!,
+            1 => _value1!,
             _ => throw new InvalidOperationException()
         };
 
@@ -38,52 +43,45 @@ public class OneOfBase<T0, T1>
     public bool IsT1 => _index == 1;
 
     public T0 AsT0 =>
-        _index == 0 ? _value0 : throw new InvalidOperationException($"Cannot return as T0 as result is T{_index}");
+        _index == 0 ? _value0! : throw new InvalidOperationException($"Cannot return as T0 as result is T{_index}");
 
     public T1 AsT1 =>
-        _index == 1 ? _value1 : throw new InvalidOperationException($"Cannot return as T1 as result is T{_index}");
+        _index == 1 ? _value1 !: throw new InvalidOperationException($"Cannot return as T1 as result is T{_index}");
 
 
     public void Switch(Action<T0> f0, Action<T1> f1)
     {
-        if (_index == 0 && f0 != null)
+        switch (_index)
         {
-            f0(_value0);
-            return;
+            case 0:
+                f0(_value0!);
+                return;
+            case 1:
+                f1(_value1!);
+                return;
+            default:
+                throw new InvalidOperationException();
         }
-
-        if (_index == 1 && f1 != null)
-        {
-            f1(_value1);
-            return;
-        }
-
-        throw new InvalidOperationException();
     }
 
     public TResult Match<TResult>(Func<T0, TResult> f0, Func<T1, TResult> f1)
     {
-        if (_index == 0 && f0 != null)
+        return _index switch
         {
-            return f0(_value0);
-        }
-
-        if (_index == 1 && f1 != null)
-        {
-            return f1(_value1);
-        }
-
-        throw new InvalidOperationException();
+            0 => f0(_value0!),
+            1 => f1(_value1!),
+            _ => throw new InvalidOperationException()
+        };
     }
 
 
     public bool TryPickT0(out T0 value, out T1 remainder)
     {
-        value = IsT0 ? AsT0 : default;
+        value = IsT0 ? AsT0! : default!;
         remainder = _index switch
         {
-            0 => default,
-            1 => AsT1,
+            0 => default!,
+            1 => AsT1!,
             _ => throw new InvalidOperationException()
         };
         return this.IsT0;
@@ -91,17 +89,17 @@ public class OneOfBase<T0, T1>
 
     public bool TryPickT1(out T1 value, out T0 remainder)
     {
-        value = IsT1 ? AsT1 : default;
+        value = IsT1 ? AsT1! : default!;
         remainder = _index switch
         {
-            0 => AsT0,
-            1 => default,
+            0 => AsT0!,
+            1 => default!,
             _ => throw new InvalidOperationException()
         };
         return this.IsT1;
     }
 
-    bool Equals(OneOfBase<T0, T1> other) =>
+    bool Equals(MultipleBase<T0, T1> other) =>
         _index == other._index &&
         _index switch
         {
@@ -122,7 +120,7 @@ public class OneOfBase<T0, T1>
             return true;
         }
 
-        return obj is OneOfBase<T0, T1> o && Equals(o);
+        return obj is MultipleBase<T0, T1> o && Equals(o);
     }
 
     public override string ToString() =>

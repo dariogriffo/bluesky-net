@@ -1,4 +1,4 @@
-namespace Bluesky.Net;
+namespace Bluesky.Net.Models;
 
 using System;
 using System.Security.Cryptography;
@@ -6,12 +6,11 @@ using System.Security.Cryptography;
 public struct Ticker
 {
     private static readonly RandomNumberGenerator Generator = RandomNumberGenerator.Create();
-    private static readonly double MicroSecPerTick = 1000000D / System.Diagnostics.Stopwatch.Frequency;
 
     public Ticker()
     {
         LastTimestamp = 0;
-        var bytes = new byte[sizeof(ushort)];
+        byte[] bytes = new byte[sizeof(ushort)];
         Generator.GetNonZeroBytes(bytes);
         ClockId = BitConverter.ToUInt16(bytes);
         NextTid();

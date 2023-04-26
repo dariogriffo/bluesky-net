@@ -1,20 +1,21 @@
-namespace Bluesky.Net;
+namespace Bluesky.Net.Models;
 
+using Internals;
 using System;
 
 public class AtUri
 {
-    private readonly string _uri;
+    private readonly string _value;
 
-    public AtUri(string uri)
+    public AtUri(string value)
     {
-        ArgumentNullException.ThrowIfNull(uri);
-        if (!Parser.TryParseUri(uri, out string[] values))
+        ArgumentNullException.ThrowIfNull(value);
+        if (!Parser.TryParseUri(value, out string?[] values))
         {
-            throw new ArgumentException("Invalid AtUri", nameof(uri));
+            throw new ArgumentException("Invalid AtUri", nameof(value));
         }
 
-        _uri = uri;
+        _value = value;
         Repository = new(values[1]);
         if (values.Length >= 5)
         {
@@ -40,5 +41,5 @@ public class AtUri
 
     public string? Fragment { get; }
 
-    public override string ToString() => _uri;
+    public override string ToString() => _value;
 }

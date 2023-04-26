@@ -4,12 +4,12 @@
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
-        <Version>0.0.2  -alpha</Version>
+        <Version>0.1.0-alpha</Version>
         <Authors>https://github.com/dariogriffo</Authors>
         <Company>https://github.com/dariogriffo</Company>
         <Title>BlueskyNet</Title>
         <Copyright>https://github.com/dariogriffo</Copyright>
-        <Description>Unofficial .NET implementation of atproto.com</Description>
+        <Description>Unofficial .NET implementation of atproto.com and Bluesky api</Description>
         <LicenseUrl>https://github.com/dariogriffo/bluesky-net/blob/main/LICENSE</LicenseUrl>
         <PackageProjectUrl>https://github.com/dariogriffo/bluesky-net</PackageProjectUrl>
         <RepositoryUrl>https://github.com/dariogriffo/bluesky-net</RepositoryUrl>
@@ -46,6 +46,16 @@
         <InternalsVisibleTo Include="BlueskyNet.UnitTests" />
         <InternalsVisibleTo Include="Autofixture" />
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Queries\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[7.0.0,)" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="[7.0.0,)" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[6.29.0,)" />
     </ItemGroup>
 
 </Project>

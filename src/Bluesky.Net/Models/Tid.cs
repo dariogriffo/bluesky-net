@@ -1,21 +1,21 @@
-namespace Bluesky.Net;
+namespace Bluesky.Net.Models;
 
 using Internals;
 using System;
 
 public struct Tid
 {
-    private readonly string _tid;
+    private readonly string _value;
 
-    public Tid(string tid)
+    public Tid(string value)
     {
-        ArgumentNullException.ThrowIfNull(tid);
-        if (!Parser.IsValidTid(tid))
+        ArgumentNullException.ThrowIfNull(value);
+        if (!Parser.IsValidTid(value))
         {
-            throw new ArgumentException("Invalid Tid", nameof(tid));
+            throw new ArgumentException("Invalid Tid", nameof(value));
         }
 
-        _tid = tid;
+        _value = value;
     }
 
     public Tid(ulong micros, ushort clockId)
@@ -31,8 +31,10 @@ public struct Tid
         }
 
         string result = Base32Sort.Encode(intBytes);
-        _tid = $"{result[..4]}-{result[4..7]}-{result[7..11]}-{result[11..13]}";
+        _value = $"{result[..4]}-{result[4..7]}-{result[7..11]}-{result[11..13]}";
     }
 
-    public override string ToString() => _tid;
+    public override string ToString() => _value;
+
+    public static implicit operator string(Tid value) => value._value;
 }
