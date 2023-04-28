@@ -10,7 +10,7 @@ public class Record
 
     public DateTime CreatedAt { get; set; }
     
-    public RichTextFacet[]? Facets { get; set; }
+    public Facet[]? Facets { get; set; }
 
     [JsonPropertyName("$type")] public string Type { get; set; }
 }

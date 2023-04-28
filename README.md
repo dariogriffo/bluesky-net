@@ -63,7 +63,24 @@ result
     .Switch(
         session => Console.WriteLine(session.Email),
         error => Console.WriteLine(JsonSerializer.Serialize(error)
-    );
+    );    
+```
+6 - Create a post
+```csharp
+
+Multiple<Did, Error> resolvedHandle = await api.ResolveHandle(session.Handle, CancellationToken.None);
+        
+string text =
+        @"Link to Google This post is created with Bluesky.Net. A library to interact with Bluesky. A mention to myself and an emoji '🌅'";
+    int mentionStart = text.IndexOf("myself", StringComparison.InvariantCulture);
+    int mentionEnd = mentionStart + Encoding.Default.GetBytes("myself").Length;
+    CreatePost post = new(
+        text,
+        new Link("www.google.com", 0, "Link to Google".Length),
+        new Mention(resolvedHandle.AsT0, mentionStart, mentionEnd));
+
+    //Create a post
+    Multiple<CreatePostResponse, Error> created = await api.CreatePost(post, CancellationToken.None);    
 ```
 # Retries
 

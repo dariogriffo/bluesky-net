@@ -1,4 +1,12 @@
-## [0.1.0](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.1.0)
+## [0.3.0-alpha](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.3.0-alpha)
+
+Create enriched text posts with links and mentions
+
+## [0.2.0-alpha](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.2.0-alpha)
+
+Create Plain text Posts
+
+## [0.1.0-alpha](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.1.0-alpha)
 
 Login, Refresh Token and Resolve Handle implemented
 

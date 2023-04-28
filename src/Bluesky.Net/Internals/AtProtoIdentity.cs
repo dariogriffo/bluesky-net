@@ -2,7 +2,6 @@ namespace Bluesky.Net.Internals;
 
 using Models;
 using Multiples;
-using Queries;
 using Queries.Feed;
 using Queries.Model;
 using System;
@@ -44,13 +43,13 @@ internal class AtProtoIdentity
         _client = client;
     }
 
-    internal async Task<Multiple<Did?, Error>> ResolveHandle(string handle, CancellationToken cancellationToken)
+    internal async Task<Multiple<Did, Error>> ResolveHandle(string handle, CancellationToken cancellationToken)
     {
         string url = $"{Constants.Urls.AtProtoIdentity.ResolveHandle}?handle={handle}";
         Multiple<HandleResolution?, Error> result = await _client.Get<HandleResolution>(url, cancellationToken);
         return result.Match(resolution =>
         {
-            Multiple<Did?, Error> did = resolution!.Did;
+            Multiple<Did, Error> did = resolution!.Did!;
             return did;
         }, error => error!);
     }

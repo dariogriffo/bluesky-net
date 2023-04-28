@@ -1,9 +1,7 @@
 namespace Bluesky.Net.Tests;
 
-using Commands.Bsky.Feed;
 using FluentAssertions;
 using Models;
-using System.Text.Json;
 using Xunit;
 
 public class AtUriTests

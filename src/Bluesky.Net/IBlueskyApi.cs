@@ -1,13 +1,9 @@
 namespace Bluesky.Net;
 
-using Commands;
 using Commands.AtProto.Server;
 using Commands.Bsky.Feed;
 using Models;
 using Multiples;
-using Queries;
-using Queries.Feed;
-using Queries.Model;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,7 +34,7 @@ public interface IBlueskyApi
     /// <param name="handle">The handle</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Multiple<Did?, Error>> ResolveHandle(string handle, CancellationToken cancellationToken);
+    Task<Multiple<Did, Error>> ResolveHandle(string handle, CancellationToken cancellationToken);
     
     /// <summary>
     /// Creates a post

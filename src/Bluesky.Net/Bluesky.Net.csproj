@@ -4,7 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
-        <Version>0.2.0-alpha</Version>
+        <Version>0.3.0-alpha</Version>
         <Authors>https://github.com/dariogriffo</Authors>
         <Company>https://github.com/dariogriffo</Company>
         <Title>BlueskyNet</Title>

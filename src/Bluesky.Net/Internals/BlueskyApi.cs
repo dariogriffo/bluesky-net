@@ -1,12 +1,10 @@
 namespace Bluesky.Net.Internals;
 
-using Commands;
 using Commands.AtProto.Server;
 using Commands.Bsky.Feed;
 using Model;
 using Models;
 using Multiples;
-using Queries;
 using Queries.Feed;
 using Queries.Model;
 using System;
@@ -45,7 +43,7 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
         Session session,
         CancellationToken cancellationToken) => _server.RefreshSession(session, cancellationToken);
 
-    public Task<Multiple<Did?, Error>> ResolveHandle(
+    public Task<Multiple<Did, Error>> ResolveHandle(
         string handle,
         CancellationToken cancellationToken) => _identity.ResolveHandle(handle, cancellationToken);
 
