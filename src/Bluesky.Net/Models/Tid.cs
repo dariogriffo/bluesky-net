@@ -3,7 +3,7 @@ namespace Bluesky.Net.Models;
 using Internals;
 using System;
 
-public struct Tid
+public class Tid
 {
     private readonly string _value;
 

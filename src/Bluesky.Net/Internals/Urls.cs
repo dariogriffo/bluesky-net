@@ -18,6 +18,17 @@ internal static class Constants
         {
             internal const string ResolveHandle = "/xrpc/com.atproto.identity.resolveHandle";
         }
+
+        internal static class AtProtoRepo
+        {
+            internal const string CreateRecord = "/xrpc/com.atproto.repo.createRecord";
+        }
+
+        internal static class Bluesky
+        {
+            internal const string GetAuthorFeed = "/xrpc/app.bsky.feed.getAuthorFeed";
+        }
+
     }
 
     internal class HeaderNames

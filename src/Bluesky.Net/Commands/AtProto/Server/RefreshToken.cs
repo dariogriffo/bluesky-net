@@ -1,4 +1,4 @@
-namespace Bluesky.Net.Commands;
+namespace Bluesky.Net.Commands.AtProto.Server;
 
 using Models;
 

@@ -7,15 +7,15 @@ public class AtUri
 {
     private readonly string _value;
 
-    public AtUri(string value)
+    public AtUri(string uri)
     {
-        ArgumentNullException.ThrowIfNull(value);
-        if (!Parser.TryParseUri(value, out string?[] values))
+        ArgumentNullException.ThrowIfNull(uri);
+        if (!Parser.TryParseUri(uri, out string?[] values))
         {
-            throw new ArgumentException("Invalid AtUri", nameof(value));
+            throw new ArgumentException("Invalid AtUri", nameof(uri));
         }
 
-        _value = value;
+        _value = uri;
         Repository = new(values[1]);
         if (values.Length >= 5)
         {
@@ -40,6 +40,6 @@ public class AtUri
     public string? Record { get; }
 
     public string? Fragment { get; }
-
+    
     public override string ToString() => _value;
 }

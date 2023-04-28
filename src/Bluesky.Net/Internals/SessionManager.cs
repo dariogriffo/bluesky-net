@@ -27,18 +27,19 @@ internal class SessionManager : IDisposable
     };
 
     private readonly BlueskyApiOptions _options;
-    private Session? _session;
     private System.Timers.Timer? _timer;
     private int _refreshing;
     private readonly AtProtoServer _server;
     private bool _disposed;
+
+    internal Session? Session { get; private set; }
 
     internal SessionManager(BlueskyApiOptions options, AtProtoServer server, Session session)
     {
         _options = options;
         _server = server;
         _server.TokenRefreshed += OnTokenRefreshed;
-        _session = session;
+        Session = session;
     }
 
     private void OnTokenRefreshed(Session session)
@@ -48,7 +49,7 @@ internal class SessionManager : IDisposable
 
     internal void SetSession(Session session)
     {
-        _session = session;
+        Session = session;
         if (!_options.AutoRenewSession)
         {
             return;
@@ -62,7 +63,7 @@ internal class SessionManager : IDisposable
     private void ConfigureRefreshTokenTimer()
     {
         Timer timer = _timer.ThrowIfNull();
-        TimeSpan timeToNextRenewal = GetTimeToNextRenewal(_session.ThrowIfNull());
+        TimeSpan timeToNextRenewal = GetTimeToNextRenewal(Session.ThrowIfNull());
         timer.Elapsed += this.RefreshToken;
         timer.Interval = timeToNextRenewal.TotalSeconds;
         timer.Enabled = true;
@@ -81,7 +82,7 @@ internal class SessionManager : IDisposable
         try
         {
             Multiple<Session, Error> result =
-                await _server.ThrowIfNull().RefreshSession(_session.ThrowIfNull(), CancellationToken.None);
+                await _server.ThrowIfNull().RefreshSession(Session.ThrowIfNull(), CancellationToken.None);
 
             result
                 .Switch(s =>

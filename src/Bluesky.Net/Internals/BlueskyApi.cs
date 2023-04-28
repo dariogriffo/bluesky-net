@@ -1,8 +1,14 @@
 namespace Bluesky.Net.Internals;
 
 using Commands;
+using Commands.AtProto.Server;
+using Commands.Bsky.Feed;
+using Model;
 using Models;
 using Multiples;
+using Queries;
+using Queries.Feed;
+using Queries.Model;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -13,9 +19,11 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
 {
     private readonly BlueskyApiOptions _options;
     private readonly AtProtoServer _server;
-    private SessionManager? _sessionManager;
     private readonly HttpClient _client;
     private readonly AtProtoIdentity _identity;
+    private readonly BlueskyFeed _feed;
+    private readonly AtProtoRepo _repo;
+    private SessionManager? _sessionManager;
 
     public BlueskyApi(IHttpClientFactory factory, BlueskyApiOptions options)
     {
@@ -23,6 +31,7 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
         _client = factory.CreateClient(Constants.BlueskyApiClient);
         _server = new AtProtoServer(factory, _options);
         _identity = new AtProtoIdentity(_client);
+        _repo = new AtProtoRepo(_client);
         _server.UserLoggedIn += OnUserLoggedIn;
         _server.TokenRefreshed += UpdateBearerToken;
     }
@@ -35,10 +44,33 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
     public Task<Multiple<Session, Error>> RefreshSession(
         Session session,
         CancellationToken cancellationToken) => _server.RefreshSession(session, cancellationToken);
-    
+
     public Task<Multiple<Did?, Error>> ResolveHandle(
         string handle,
         CancellationToken cancellationToken) => _identity.ResolveHandle(handle, cancellationToken);
+
+    public Task<Multiple<CreatePostResponse, Error>> CreatePost(
+        CreatePost command,
+        CancellationToken cancellationToken)
+    {
+        CreateRecord record = new(
+            "app.bsky.feed.post",
+            _sessionManager!.Session!.Did.ToString()!,
+            new Record()
+            {
+                Text = command.Text, 
+                Type = "app.bsky.feed.post",
+                CreatedAt = DateTime.UtcNow,
+                Facets = command.Facets
+            });
+
+        return _repo.Create(record, cancellationToken);
+    }
+
+    public Task<Multiple<AuthorFeed, Error>> Query(GetAuthorFeed query, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 
     public void Dispose()
     {
@@ -56,7 +88,7 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
     private void OnUserLoggedIn(Session session)
     {
         UpdateBearerToken(session);
-        
+
         if (!_options.TrackSession)
         {
             return;

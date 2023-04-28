@@ -14,7 +14,13 @@ internal static class HttpClientExtensions
 {
     private static readonly JsonSerializerOptions? Options = new()
     {
-        Converters = {new DidJsonConverter()}, PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        Converters =
+        {
+            new DidJsonConverter(),
+            new AtUriJsonConverter(),
+            new NsidJsonConverter(),
+            new TidJsonConverter()
+        }, PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
     internal async static Task<Multiple<TK, Error>> Post<T, TK>(

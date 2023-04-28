@@ -1,7 +1,9 @@
 namespace Bluesky.Net.Tests;
 
+using Commands.Bsky.Feed;
 using FluentAssertions;
 using Models;
+using System.Text.Json;
 using Xunit;
 
 public class AtUriTests
@@ -15,6 +17,7 @@ public class AtUriTests
     [InlineData("at://bob.com/io.example.song/3yI5-c1z-cc2p-1a")]
     [InlineData("at://bob.com/io.example.song/3yI5-c1z-cc2p-1a#/title")]
     [InlineData("at://did:plc:ltk4reuh7rkoy2frnueetpb5/app.bsky.follow/3jg23pbmlhc2a")]
+    [InlineData("at://did:plc:hdfawlopxvzukvkxn3z5lgko/app.bsky.feed.post/3juegsobnjf2n")]
     public void Valid_AtUri(string uri)
     {
         AtUri sut = new AtUri(uri);

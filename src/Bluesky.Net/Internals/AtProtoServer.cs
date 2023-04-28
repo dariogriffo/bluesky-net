@@ -1,6 +1,6 @@
 namespace Bluesky.Net.Internals;
 
-using Commands;
+using Commands.AtProto.Server;
 using Models;
 using Multiples;
 using System.Net.Http;
@@ -40,7 +40,7 @@ internal class AtProtoServer
                     UserLoggedIn?.Invoke(s);
 
                     return result;
-                }, _ => _!);
+                }, error => error!);
     }
 
     public async Task<Multiple<Session, Error>> RefreshSession(
@@ -64,7 +64,7 @@ internal class AtProtoServer
 
                     TokenRefreshed?.Invoke(s);
                     return result;
-                }, _ => _!);
+                }, error => error!);
     }
 
     internal UserLoggedIn? UserLoggedIn { get; set; }

@@ -5,9 +5,9 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-public class DidJsonConverter : JsonConverter<Did>
+public class NsidJsonConverter : JsonConverter<Nsid>
 {
-    public override Did? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override Nsid? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         string? value = reader.GetString();
         if (value is null)
@@ -17,7 +17,7 @@ public class DidJsonConverter : JsonConverter<Did>
         
         try
         {
-            return new Did(value);
+            return new Nsid(value);
         }
         catch (Exception)
         {
@@ -25,7 +25,7 @@ public class DidJsonConverter : JsonConverter<Did>
         }
     }
 
-    public override void Write(Utf8JsonWriter writer, Did? value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, Nsid? value, JsonSerializerOptions options)
     {
         writer.WriteStringValue(value?.ToString());
     }

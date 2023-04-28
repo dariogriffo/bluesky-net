@@ -4,7 +4,7 @@ using Internals;
 using System;
 using System.Linq;
 
-public struct Nsid
+public class Nsid
 {
     private readonly string _value;
 
