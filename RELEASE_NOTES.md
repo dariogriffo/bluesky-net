@@ -1,3 +1,7 @@
+## [0.4.0-alpha](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.4.0-alpha)
+
+Get user Profile. Return Result instead of Multple
+
 ## [0.3.0-alpha](https://github.com/dariogriffo/Nordigen.Net/releases/tag/0.3.0-alpha)
 
 Create enriched text posts with links and mentions
