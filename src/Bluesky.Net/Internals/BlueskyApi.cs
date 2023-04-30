@@ -4,7 +4,6 @@ using Commands.AtProto.Server;
 using Commands.Bsky.Feed;
 using Model;
 using Models;
-using Multiples;
 using Queries.Feed;
 using Queries.Model;
 using System;
@@ -20,34 +19,43 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
     private readonly HttpClient _client;
     private readonly AtProtoIdentity _identity;
     private readonly BlueskyFeed _feed;
+    private readonly BlueskyActor _actor;
     private readonly AtProtoRepo _repo;
+
     private SessionManager? _sessionManager;
 
     public BlueskyApi(IHttpClientFactory factory, BlueskyApiOptions options)
     {
         _options = options;
         _client = factory.CreateClient(Constants.BlueskyApiClient);
-        _server = new AtProtoServer(factory, _options);
-        _identity = new AtProtoIdentity(_client);
-        _repo = new AtProtoRepo(_client);
+        _server = new(factory, _options);
+        _identity = new(_client);
+        _repo = new(_client);
+        _actor = new(_client);
         _server.UserLoggedIn += OnUserLoggedIn;
         _server.TokenRefreshed += UpdateBearerToken;
     }
 
-    public Task<Multiple<Session, Error>> Login(Login command, CancellationToken cancellationToken)
+    public Task<Result<Session>> Login(Login command, CancellationToken cancellationToken)
     {
         return _server.Login(command, cancellationToken);
     }
 
-    public Task<Multiple<Session, Error>> RefreshSession(
+    public Task<Result<Session>> RefreshSession(
         Session session,
         CancellationToken cancellationToken) => _server.RefreshSession(session, cancellationToken);
 
-    public Task<Multiple<Did, Error>> ResolveHandle(
+    public Task<Result<Profile>> GetProfile(Did did, CancellationToken cancellationToken)
+        => _actor.GetProfile(did, cancellationToken)!;
+
+    public Task<Result<Profile>> GetProfile(CancellationToken cancellationToken)
+        => GetProfile(_sessionManager.ThrowIfNull().Session.ThrowIfNull().Did, cancellationToken);
+
+    public Task<Result<Did>> ResolveHandle(
         string handle,
         CancellationToken cancellationToken) => _identity.ResolveHandle(handle, cancellationToken);
 
-    public Task<Multiple<CreatePostResponse, Error>> CreatePost(
+    public Task<Result<CreatePostResponse>> CreatePost(
         CreatePost command,
         CancellationToken cancellationToken)
     {
@@ -56,7 +64,7 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
             _sessionManager!.Session!.Did.ToString()!,
             new Record()
             {
-                Text = command.Text, 
+                Text = command.Text,
                 Type = "app.bsky.feed.post",
                 CreatedAt = DateTime.UtcNow,
                 Facets = command.Facets
@@ -65,7 +73,7 @@ internal class BlueskyApi : IBlueskyApi, IDisposable
         return _repo.Create(record, cancellationToken);
     }
 
-    public Task<Multiple<AuthorFeed, Error>> Query(GetAuthorFeed query, CancellationToken cancellationToken)
+    public Task<Result<AuthorFeed>> Query(GetAuthorFeed query, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

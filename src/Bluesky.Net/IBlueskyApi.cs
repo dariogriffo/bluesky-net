@@ -3,7 +3,7 @@ namespace Bluesky.Net;
 using Commands.AtProto.Server;
 using Commands.Bsky.Feed;
 using Models;
-using Multiples;
+using Queries.Model;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +18,7 @@ public interface IBlueskyApi
     /// <param name="command">The login details</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Multiple<Session, Error>> Login(Login command, CancellationToken cancellationToken);
+    Task<Result<Session>> Login(Login command, CancellationToken cancellationToken);
 
     /// <summary>
     /// Tries to refresh the <see cref="Session"/>
@@ -26,7 +26,22 @@ public interface IBlueskyApi
     /// <param name="session">The session</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Multiple<Session, Error>> RefreshSession(Session session, CancellationToken cancellationToken);
+    Task<Result<Session>> RefreshSession(Session session, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Get the profile of the actor with <see cref="did"/> 
+    /// </summary>
+    /// <param name="did">The id of the actor</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<Result<Profile>> GetProfile(Did did, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Get the profile of the actor with the current session 
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<Result<Profile>> GetProfile(CancellationToken cancellationToken);
 
     /// <summary>
     /// Tries to resolve the <see cref="handle"/> to a valid <see cref="Did"/>
@@ -34,7 +49,7 @@ public interface IBlueskyApi
     /// <param name="handle">The handle</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Multiple<Did, Error>> ResolveHandle(string handle, CancellationToken cancellationToken);
+    Task<Result<Did>> ResolveHandle(string handle, CancellationToken cancellationToken);
     
     /// <summary>
     /// Creates a post
@@ -42,7 +57,7 @@ public interface IBlueskyApi
     /// <param name="post"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<Multiple<CreatePostResponse, Error>> CreatePost(CreatePost post, CancellationToken cancellationToken);
+    Task<Result<CreatePostResponse>> CreatePost(CreatePost post, CancellationToken cancellationToken);
     
     /// <summary>
     /// 
@@ -50,7 +65,7 @@ public interface IBlueskyApi
     /// <param name="query"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    /// Task<Multiple<AuthorFeed, Error>> Query(GetAuthorFeed query, CancellationToken cancellationToken);
+    /// Task<Result<AuthorFeed>> Query(GetAuthorFeed query, CancellationToken cancellationToken);
     ///
     
     

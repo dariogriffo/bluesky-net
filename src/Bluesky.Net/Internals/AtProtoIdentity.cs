@@ -18,7 +18,7 @@ internal class BlueskyFeed
         _client = client;
     }
 
-    internal async Task<Multiple<AuthorFeed, Error>> Query(GetAuthorFeed query, CancellationToken cancellationToken)
+    internal async Task<Result<AuthorFeed>> Query(GetAuthorFeed query, CancellationToken cancellationToken)
     {
         string url = $"{Constants.Urls.Bluesky.GetAuthorFeed}?actor={query.Actor}&limit={query.Limit}";
         if (query.Cursor is not null)
@@ -28,7 +28,7 @@ internal class BlueskyFeed
 
         Multiple<AuthorFeed?, Error> result = await _client.Get<AuthorFeed>(url, cancellationToken);
         return result
-            .Match<Multiple<AuthorFeed, Error>>(
+            .Match<Result<AuthorFeed>>(
                 authorFeed => (authorFeed ?? new AuthorFeed(Array.Empty<FeedViewPost>(), null))!,
                 error => error!);
     }
@@ -43,13 +43,13 @@ internal class AtProtoIdentity
         _client = client;
     }
 
-    internal async Task<Multiple<Did, Error>> ResolveHandle(string handle, CancellationToken cancellationToken)
+    internal async Task<Result<Did>> ResolveHandle(string handle, CancellationToken cancellationToken)
     {
         string url = $"{Constants.Urls.AtProtoIdentity.ResolveHandle}?handle={handle}";
-        Multiple<HandleResolution?, Error> result = await _client.Get<HandleResolution>(url, cancellationToken);
+        Result<HandleResolution?> result = await _client.Get<HandleResolution>(url, cancellationToken);
         return result.Match(resolution =>
         {
-            Multiple<Did, Error> did = resolution!.Did!;
+            Result<Did> did = resolution!.Did!;
             return did;
         }, error => error!);
     }

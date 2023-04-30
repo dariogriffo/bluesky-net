@@ -3,7 +3,6 @@ namespace Bluesky.Net.Internals;
 using Commands.Bsky.Feed;
 using Model;
 using Models;
-using Multiples;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ internal class AtProtoRepo
         _client = client;
     }
 
-    public Task<Multiple<CreatePostResponse, Error>> Create(CreateRecord record, CancellationToken cancellationToken)
+    public Task<Result<CreatePostResponse>> Create(CreateRecord record, CancellationToken cancellationToken)
     {
         return
             _client

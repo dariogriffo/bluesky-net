@@ -27,6 +27,7 @@ internal static class Constants
         internal static class Bluesky
         {
             internal const string GetAuthorFeed = "/xrpc/app.bsky.feed.getAuthorFeed";
+            internal const string GetActorProfile = "/xrpc/app.bsky.actor.getProfile";
         }
 
     }

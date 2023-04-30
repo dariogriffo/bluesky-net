@@ -2,7 +2,6 @@ namespace Bluesky.Net.Internals;
 
 using Json;
 using Models;
-using Multiples;
 using System;
 using System.Net.Http;
 using System.Text;
@@ -23,7 +22,7 @@ internal static class HttpClientExtensions
         }, PropertyNamingPolicy = JsonNamingPolicy.CamelCase
     };
 
-    internal async static Task<Multiple<TK, Error>> Post<T, TK>(
+    internal async static Task<Result<TK>> Post<T, TK>(
         this HttpClient client,
         string url,
         T body,
@@ -42,7 +41,7 @@ internal static class HttpClientExtensions
         return result!;
     }
 
-    internal async static Task<Multiple<TK, Error>> Post<TK>(
+    internal async static Task<Result<TK>> Post<TK>(
         this HttpClient client,
         string url,
         CancellationToken cancellationToken)
@@ -59,7 +58,7 @@ internal static class HttpClientExtensions
         return result!;
     }
 
-    internal static async Task<Multiple<T?, Error>> Get<T>(
+    internal static async Task<Result<T?>> Get<T>(
         this HttpClient client,
         string url,
         CancellationToken cancellationToken)

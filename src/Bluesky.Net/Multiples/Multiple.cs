@@ -10,13 +10,13 @@ using static Internals.Functions;
 /// </summary>
 /// <typeparam name="T0"></typeparam>
 /// <typeparam name="T1"></typeparam>
-public readonly struct Multiple<T0, T1>
+public class Multiple<T0, T1>
 {
     readonly T0? _value0;
     readonly T1? _value1;
     readonly int _index;
 
-    Multiple(int index, T0? value0 = default, T1? value1 = default)
+    public Multiple(int index, T0? value0 = default, T1? value1 = default)
     {
         _index = index;
         _value0 = value0;

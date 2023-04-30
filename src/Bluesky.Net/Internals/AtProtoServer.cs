@@ -2,7 +2,6 @@ namespace Bluesky.Net.Internals;
 
 using Commands.AtProto.Server;
 using Models;
-using Multiples;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -23,10 +22,10 @@ internal class AtProtoServer
         _options = options;
     }
 
-    internal async Task<Multiple<Session, Error>> Login(Login command, CancellationToken cancellationToken)
+    internal async Task<Result<Session>> Login(Login command, CancellationToken cancellationToken)
     {
         using HttpClient client = _factory.CreateClient(Constants.BlueskyApiClient);
-        Multiple<Session, Error> result =
+        Result<Session> result =
             await client.Post<Login, Session>(Constants.Urls.AtProtoServer.Login, command, cancellationToken);
         return
             result
@@ -43,7 +42,7 @@ internal class AtProtoServer
                 }, error => error!);
     }
 
-    public async Task<Multiple<Session, Error>> RefreshSession(
+    public async Task<Result<Session>> RefreshSession(
         Session session,
         CancellationToken cancellationToken)
     {
